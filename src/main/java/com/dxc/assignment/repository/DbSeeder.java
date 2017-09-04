@@ -25,5 +25,4 @@ public class DbSeeder implements CommandLineRunner {
 		this.userDAO.deleteAll();
 		this.userDAO.save(user);
 	}
-
 }

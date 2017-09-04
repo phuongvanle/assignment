@@ -1,6 +1,12 @@
 package com.dxc.assignment.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "PieChart")
 public class PieChart {
+	@Id
+	private String id;
 	
 	private int failed;
 	
@@ -21,8 +27,5 @@ public class PieChart {
 	public void setPassed(int passed) {
 		this.passed = passed;
 	}
-	
-
-	
 
 }

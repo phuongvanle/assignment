@@ -6,5 +6,4 @@ public interface PieChartService {
 
 	PieChart createPieChart(String project);
 
-
 }

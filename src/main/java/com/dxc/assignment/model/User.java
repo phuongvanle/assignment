@@ -22,7 +22,9 @@ public class User implements UserDetails {
 	private List<Authority> authorities;
 	
 	
-	
+	public User() {
+		
+	}
 	public User(String username, String password, List<Authority> authorities) {
 		this.username = username;
 		this.password = password;

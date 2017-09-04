@@ -63,7 +63,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().exceptionHandling().authenticationEntryPoint(entryPoint).and().authorizeRequests()
-		.antMatchers(HttpMethod.GET, "/", "/*.html","/favicon.ico","/**/*.html", "/**/*.css", "/**/*.js", "/charts/*")
+		.antMatchers(HttpMethod.GET, "/", "/*.html","/favicon.ico","/**/*.html", "/**/*.css", "/**/*.js","/charts/**")
 		.permitAll().antMatchers("/auth/**").permitAll().anyRequest().authenticated().and()
 		.addFilterBefore(new TokenAuthenticationFilter(tokenHelper, userDetailsService), BasicAuthenticationFilter.class)
 		.formLogin().loginPage("/auth/login")

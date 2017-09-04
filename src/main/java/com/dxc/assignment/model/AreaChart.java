@@ -1,15 +1,21 @@
 package com.dxc.assignment.model;
 
+import java.util.Date;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+@Document(collection="Areachart")
 public class AreaChart {
-	
-	private String date;
+	@Id
+	private String id;
+	private Date date;
 	private int passed;
 	private int failed;
 	
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public int getPassed() {
