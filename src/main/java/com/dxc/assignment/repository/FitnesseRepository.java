@@ -84,7 +84,7 @@ public class FitnesseRepository {
 					passed = Integer.parseInt(tds.select("[class^=pass_count").text());
 					failed = Integer.parseInt(tds.select("[class^=fail_count").text());
 					AreaChart area = new AreaChart();
-					area.setDate(date);
+					area.setDate(buildDate(date));
 					area.setFailed(failed);
 					area.setPassed(passed);
 					areas.add(area);
@@ -102,10 +102,10 @@ public class FitnesseRepository {
 	 * @return
 	 */
 	public List<AreaChart> uniqueAreaChartWithDate(List<AreaChart> list) {
-		Map<String, AreaChart> map = new HashMap<>();
+		Map<Date, AreaChart> map = new HashMap<>();
 		
 		for (AreaChart areaChart : list) {
-			String date = areaChart.getDate();
+			Date date = areaChart.getDate();
 			AreaChart sum = map.get(date);
 			if (sum == null) {
 				sum = new AreaChart();
@@ -120,7 +120,7 @@ public class FitnesseRepository {
 		List<AreaChart> result = new ArrayList<AreaChart>(map.values());
 		ComparatorWithDate comparator = new ComparatorWithDate();
 		Collections.sort(result, comparator);
-		String maxDate = buildDateInFourWeek(result.get(result.size()-1).getDate());
+		Date maxDate = buildDateInFourWeek(result.get(result.size()-1).getDate());
 		
 		return removeOutOfFourWeek(maxDate, result);
 	}
@@ -149,19 +149,19 @@ public class FitnesseRepository {
 		return testSuites;
 	}
 	
-	public static String buildDateInFourWeek(String date) {
+	public static Date buildDateInFourWeek(Date date) {
 		Calendar recentDate = Calendar.getInstance();
-		int year1 = Integer.parseInt(date.substring(0, 4));
-		int month1 = Integer.parseInt(date.substring(4, 6));
-		int day1 = Integer.parseInt(date.substring(6, 8));
-		recentDate.set(year1, month1-1, day1);
+//		int year1 = Integer.parseInt(date.substring(0, 4));
+//		int month1 = Integer.parseInt(date.substring(4, 6));
+//		int day1 = Integer.parseInt(date.substring(6, 8));
+		recentDate.setTime(date);
 		recentDate.add(Calendar.WEEK_OF_YEAR, -4);
 		Date res = recentDate.getTime();
-		String format = new SimpleDateFormat("yyyyMMdd").format(res);
-		return format;
+//		Date format = new SimpleDateFormat("yyyyMMdd").format(res);
+		return res;
 	}
 
-	public List<AreaChart> removeOutOfFourWeek(String date, List<AreaChart> list) {
+	public List<AreaChart> removeOutOfFourWeek(Date date, List<AreaChart> list) {
 		int index = 0;
 		ComparatorWithDate comparator = new ComparatorWithDate();
 		AreaChart area = new AreaChart();
@@ -185,6 +185,16 @@ public class FitnesseRepository {
 		}
 		
 		return list;
+	}
+	
+	public static Date buildDate(String days){
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("yyyyMMdd").parse(days);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 
 }

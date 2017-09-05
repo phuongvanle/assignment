@@ -52,5 +52,4 @@ public class DbSeeder implements CommandLineRunner {
 			this.projectRepository.save(data);
 		}
 	}
-
 }

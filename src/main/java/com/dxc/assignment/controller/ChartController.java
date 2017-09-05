@@ -3,6 +3,7 @@ package com.dxc.assignment.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +27,13 @@ public class ChartController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	
+	@CrossOrigin
 	@GetMapping("/pie/{project}")
 	public PieChart getPieChart(@PathVariable("project") String project) {
 		PieChart pie = pieChartService.findPieChart(project);
 		return pie;
 	}
-	
+	@CrossOrigin
 	@GetMapping("/area/{project}")
 	public List<AreaChart> getAreaChart(@PathVariable("project") String project) {
 		List<AreaChart> areaCharts = areChartService.findAreaChart(project);
