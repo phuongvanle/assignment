@@ -1,6 +1,7 @@
 package com.dxc.assignment.repository;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,8 +35,23 @@ public class FitnesseRepository {
 	public void setUrlFitnesse(String urlFitnesse) {
 		this.urlFitnesse = urlFitnesse;
 	}
+	
+	public List<String> getProjects() {
+		List<String> projects = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect(urlFitnesse).get();
+			Elements trs = doc.select("table tr td a");
+			for (Element element : trs) {
+				String project = element.attr("href").substring(element.attr("href").indexOf(".")+1);
+				projects.add(project);
+			}
+		} catch (IOException e) {
+			System.out.println("No connection to fitnesse");
+		}
+		return projects;
+	}
 
-	public PieChart getPieChart(String project) {
+	public PieChart getPieChart(String project) throws IOException {
 		List<AreaChart> areas = getAreaChart(project);
 		PieChart p = new PieChart();
 		int sumFailed = areas.stream().mapToInt(AreaChart::getFailed).sum();
@@ -48,15 +64,16 @@ public class FitnesseRepository {
 	 * This method create list areachart model of prject
 	 * @param project
 	 * @return
+	 * @throws IOException 
 	 */
-	public List<AreaChart> getAreaChart(String project) {
+	public List<AreaChart> getAreaChart(String project) throws IOException {
 		String path = urlFitnesse + "/FrontPage." + project;
 		List<AreaChart> areas = new ArrayList<>();
 		List<String> testSuites = getTestSuites(path);
 		for (String testSuite : testSuites) {
 			String pageHistory = path + "." + testSuite + "?pageHistory";
 			Document doc;
-			try {
+//			try {
 				doc = Jsoup.connect(pageHistory).get();
 				Elements trs = doc.select("table tr[id]");
 				for (Element tr : trs) {
@@ -73,8 +90,9 @@ public class FitnesseRepository {
 					areas.add(area);
 				}
 				
-			} catch (Exception e) {
-			}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 		}
 		return uniqueAreaChartWithDate(areas);
 	}
@@ -112,10 +130,11 @@ public class FitnesseRepository {
 	 * Get all testsuite in project 
 	 * @param path example http://localhost:8083/FrontPage.SuitProject001
 	 * @return
+	 * @throws IOException 
 	 */
-	public List<String> getTestSuites(String path) {
+	public List<String> getTestSuites(String path) throws IOException {
 		List<String> testSuites = new ArrayList<String>();
-		try {
+//		try {
 			Document doc = Jsoup.connect(path).get();
 			Elements table = doc.select("table");
 			Elements td = table.select("td a");
@@ -124,9 +143,9 @@ public class FitnesseRepository {
 				String name = href.substring(href.lastIndexOf(".") + 1);
 				testSuites.add(name);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		return testSuites;
 	}
 	

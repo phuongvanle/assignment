@@ -6,7 +6,7 @@ import com.dxc.assignment.model.AreaChart;
 
 public interface AreaChartService {
 
-	List<AreaChart> createAreaChart(String project);
+	List<AreaChart> findAreaChart(String project);
 
 
 }

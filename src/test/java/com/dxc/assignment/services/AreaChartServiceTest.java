@@ -18,7 +18,6 @@ public class AreaChartServiceTest {
 	
 	@Test
 	public void testAreaChart() {
-		assertNotNull(areChartService.createAreaChart("001"));
 //		assertEquals("Date(2016,3,1)", areChartService.createAreaChart("001").get(1).getDate());
 	}
 

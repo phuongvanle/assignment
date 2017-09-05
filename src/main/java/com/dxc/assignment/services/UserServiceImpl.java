@@ -1,18 +1,15 @@
 package com.dxc.assignment.services;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dxc.assignment.dao.UserDAO;
 import com.dxc.assignment.model.User;
+import com.dxc.assignment.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
-	private UserDAO userRepository;
+	private UserRepository userRepository;
 	
 	@Override
 	public User findById(String id) {

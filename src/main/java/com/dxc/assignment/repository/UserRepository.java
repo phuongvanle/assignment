@@ -1,10 +1,11 @@
-package com.dxc.assignment.dao;
-
+package com.dxc.assignment.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.dxc.assignment.model.User;
 
-public interface UserDAO extends MongoRepository<User, String> {
+public interface UserRepository extends MongoRepository<User, String> {
+	
 	User findByUsername(String username);
+
 }
