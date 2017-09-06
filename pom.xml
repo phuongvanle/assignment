@@ -75,7 +75,7 @@
 			<artifactId>jackson-annotations</artifactId>
 		</dependency>
 		
-		        <dependency>
+		<dependency>
           <groupId>org.webjars</groupId>
           <artifactId>angularjs</artifactId>
           <version>1.5.8</version>

@@ -39,8 +39,6 @@ public class DbSeeder implements CommandLineRunner {
 			Project data = new Project(project, fitnesseRepository.getPieChart(project), fitnesseRepository.getAreaChart(project));
 			this.projectRepository.save(data);
 		}
-		
-		
 		this.userRepository.deleteAll();
 		this.userRepository.save(user);
 	}
