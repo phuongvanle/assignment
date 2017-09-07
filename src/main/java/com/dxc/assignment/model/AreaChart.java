@@ -11,6 +11,7 @@ public class AreaChart {
 	private Date date;
 	private int passed;
 	private int failed;
+	private int neverRun;
 	
 	public Date getDate() {
 		return date;
@@ -31,6 +32,12 @@ public class AreaChart {
 		this.failed = failed;
 	}
 	
+	public int getNeverRun() {
+		return neverRun;
+	}
+	public void setNeverRun(int neverRun) {
+		this.neverRun = neverRun;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null)

@@ -11,7 +11,6 @@ public class Project {
 	@Id
 	private String id;
 	private String name;
-	private PieChart pieCharts;
 	private List<AreaChart> areaCharts;
 	
 	
@@ -20,9 +19,8 @@ public class Project {
 	}
 
 
-	public Project(String name, PieChart pieCharts, List<AreaChart> areaCharts) {
+	public Project(String name, List<AreaChart> areaCharts) {
 		this.name = name;
-		this.pieCharts = pieCharts;
 		this.areaCharts = areaCharts;
 	}
 
@@ -45,17 +43,6 @@ public class Project {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-	public PieChart getPieCharts() {
-		return pieCharts;
-	}
-
-
-	public void setPieCharts(PieChart pieCharts) {
-		this.pieCharts = pieCharts;
-	}
-
 
 	public List<AreaChart> getAreaCharts() {
 		return areaCharts;

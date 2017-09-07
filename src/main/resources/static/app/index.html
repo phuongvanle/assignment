@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<base href="/">
+<title>springboot-jwt-starter</title>
+<link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.css">
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+</style>
+</head>
+<body ng-app="myApp" ng-controller="mainCtrl as main">
+
+	<div ng-view></div>
+	<script src="webjars/jquery/2.1.1/jquery.js"></script>
+	<script src="webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
+	<script src="webjars/angularjs/1.5.8/angular.js"></script>
+	<script src="webjars/angular-route/1.5.9/angular-route.js"></script>
+	<script src="webjars/angular-cookies/1.6.0/angular-cookies.js"></script>
+
+	<!--Angular route-->
+	<script src="app/app.js"></script>
+	<script src="app/routes.js"></script>
+	<script src="app/controllers/mainCtrl.js"></script>
+	  <!--Angular services-->
+    <script src="app/services/userServices.js"></script>
+
+</body>
+
+</html>

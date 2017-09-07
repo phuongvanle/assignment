@@ -1,6 +1,7 @@
 package com.dxc.assignment.repository;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,21 +35,20 @@ public class DbSeeder implements CommandLineRunner {
 		User user = new User("user","$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", Arrays.asList(
 					new Authority("ROLE_USER")
 				));
-		this.projectRepository.deleteAll();
-		for (String project : fitnesseRepository.getProjects()) {
-			Project data = new Project(project, fitnesseRepository.getPieChart(project), fitnesseRepository.getAreaChart(project));
-			this.projectRepository.save(data);
-		}
+//		this.projectRepository.deleteAll();
+//		for (String project : fitnesseRepository.getProjects()) {
+//			Project data = new Project(project, fitnesseRepository.getAreaChart(project));
+//			this.projectRepository.save(data);
+//		}
 		
 		
 		this.userRepository.deleteAll();
 		this.userRepository.save(user);
 	}
-	
 	@Scheduled(fixedDelay = 60000*10)
-	public void autoSaveData() throws IOException {
+	public void autoSaveData() throws IOException, ParseException {
 		for (String project : fitnesseRepository.getProjects()) {
-			Project data = new Project(project, fitnesseRepository.getPieChart(project), fitnesseRepository.getAreaChart(project));
+			Project data = new Project(project, fitnesseRepository.getAreaChart(project));
 			this.projectRepository.save(data);
 		}
 	}
