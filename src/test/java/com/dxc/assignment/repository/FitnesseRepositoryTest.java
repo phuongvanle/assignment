@@ -65,15 +65,8 @@ public class FitnesseRepositoryTest {
 	}
 	
 	@Test
-<<<<<<< HEAD
 	public void getProjects() {
 		assertEquals(2, fitnesseRepository.getProjects());
-=======
-	public void uniqueAreaChartWithDate() {
-//		assertEquals(2, fitnesseRepository.uniqueAreaChartWithDate(areas).get(1).getFailed());
-		assertEquals(2, fitnesseRepository.getProjects().size());
-//		assertArrayEquals( fitnesseRepository.uniqueAreaChartWithDate(areas));
->>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 	}
 
 }
