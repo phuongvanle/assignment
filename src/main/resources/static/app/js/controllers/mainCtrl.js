@@ -3,4 +3,4 @@
  */
 angular.module('mainController',['authServices'])
 
-.controller
+.controller()

@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.joda.time.DateTimeUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 import com.dxc.assignment.model.User;
 import com.dxc.assignment.security.TokenHelper;
@@ -57,8 +59,7 @@ public class AuthenticationControllerTest {
 		String token = tokenHelper.generateToken(new UserDetailsDummy("test-user").getUsername());
 		this.mvc.perform(get("/auth/refresh").header("Authorization", "Bearer " + token)).andExpect(status().is(200));
 	}
-	
-	@Test(expected = ExpiredJwtException.class)
+	@Test(expected = NestedServletException.class)
 	public void shouldNotGet200WhenGivenInvalidOldToken() throws Exception {
 		DateTimeUtils.setCurrentMillisFixed(1L);
 		 String token = tokenHelper.generateToken(new UserDetailsDummy("test-user").getUsername());

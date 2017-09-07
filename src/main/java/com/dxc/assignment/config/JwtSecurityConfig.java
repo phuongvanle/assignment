@@ -72,16 +72,13 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 		.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
 		.logoutSuccessHandler(logoutSuccess)
 		.deleteCookies(TOKEN_COOKIE);
-		
 		 // disable csrf for the login request
 		http.csrf().ignoringAntMatchers("/auth/login")
 		.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-		
 	}
-	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(HttpMethod.GET, "/", "/*.html","/favicon.ico","/**/*.html","/**/*.css","/**/*.js","/charts/**");
+		web.ignoring().antMatchers(HttpMethod.GET, "/", "/*.html","/favicon.ico","/**/*.html","/**/*.css","/**/*.js","/charts/**","/webjars/**");
 	}
 
 }

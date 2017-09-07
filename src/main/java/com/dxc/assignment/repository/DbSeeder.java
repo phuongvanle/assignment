@@ -48,8 +48,8 @@ public class DbSeeder implements CommandLineRunner {
 	@Scheduled(fixedDelay = 60000*10)
 	public void autoSaveData() throws IOException, ParseException {
 		for (String project : fitnesseRepository.getProjects()) {
-//			Project data = new Project(project, fitnesseRepository.getAreaChart(project));
-//			this.projectRepository.save(data);
+			Project data = new Project(project, fitnesseRepository.getAreaChart(project));
+			this.projectRepository.save(data);
 		}
 	}
 }

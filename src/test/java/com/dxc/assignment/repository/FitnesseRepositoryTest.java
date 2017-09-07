@@ -49,7 +49,7 @@ public class FitnesseRepositoryTest {
 		assertNotNull((fitnesseRepository.uniqueOriginWithLatesDate(areas)));
 	}
 	
-	@Test 
+	@Test
 	public void numberOfSuiteSetUp() {
 		assertEquals(2, a);
 	}
@@ -61,12 +61,12 @@ public class FitnesseRepositoryTest {
 	
 	@Test
 	public void getAreaChart() throws IOException, ParseException {
-		assertEquals(4, fitnesseRepository.getAreaChart("SuitProject001").size());
+		assertEquals(2, fitnesseRepository.getAreaChart("SuitProject001").size());
 	}
 	
 	@Test
 	public void getProjects() {
-		assertEquals(2, fitnesseRepository.getProjects());
+		assertEquals(Arrays.asList("SuitProject001","SuitProject002"), fitnesseRepository.getProjects());
 	}
 
 }
