@@ -35,6 +35,7 @@ public class DbSeeder implements CommandLineRunner {
 		User user = new User("user","$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", Arrays.asList(
 					new Authority("ROLE_USER")
 				));
+<<<<<<< HEAD
 //		this.projectRepository.deleteAll();
 //		for (String project : fitnesseRepository.getProjects()) {
 //			Project data = new Project(project, fitnesseRepository.getAreaChart(project));
@@ -42,6 +43,13 @@ public class DbSeeder implements CommandLineRunner {
 //		}
 		
 		
+=======
+		this.projectRepository.deleteAll();
+		for (String project : fitnesseRepository.getProjects()) {
+			Project data = new Project(project, fitnesseRepository.getPieChart(project), fitnesseRepository.getAreaChart(project));
+			this.projectRepository.save(data);
+		}
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 		this.userRepository.deleteAll();
 		this.userRepository.save(user);
 	}

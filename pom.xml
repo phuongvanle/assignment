@@ -74,6 +74,7 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 		</dependency>
+<<<<<<< HEAD
 
 
 		<!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-mongodb -->
@@ -94,6 +95,14 @@
 			<artifactId>angularjs</artifactId>
 			<version>1.5.8</version>
 		</dependency>
+=======
+		
+		<dependency>
+          <groupId>org.webjars</groupId>
+          <artifactId>angularjs</artifactId>
+          <version>1.5.8</version>
+        </dependency>
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -107,11 +116,19 @@
 			<version>1.6.0</version>
 		</dependency>
 
+<<<<<<< HEAD
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>angular-route</artifactId>
 			<version>1.5.9</version>
 		</dependency>
+=======
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>angular-route</artifactId>
+            <version>1.5.9</version>
+        </dependency>
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -120,11 +137,19 @@
 		</dependency>
 
 		<dependency>
+<<<<<<< HEAD
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>2.1.1</version>
 		</dependency>
 
+=======
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+		
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>angular-route</artifactId>

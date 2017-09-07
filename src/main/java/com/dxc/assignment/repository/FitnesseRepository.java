@@ -55,7 +55,17 @@ public class FitnesseRepository {
 
 	public AreaChart getPieChart(String project) throws IOException, ParseException {
 		List<AreaChart> areas = getAreaChart(project);
+<<<<<<< HEAD
 		return areas.get(areas.size()-1);
+=======
+		AreaChart are = areas.get(areas.size());
+		PieChart p = new PieChart();
+//		int sumFailed = areas.stream().mapToInt(AreaChart::getFailed).sum();
+//		int sumPassed = areas.stream().mapToInt(AreaChart::getPassed).sum();
+		p.setFailed(are.getFailed());
+		p.setPassed(are.getPassed());
+		return p;
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 	}
 	/**
 	 * This method create list areachart model of prject
@@ -64,6 +74,7 @@ public class FitnesseRepository {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
+<<<<<<< HEAD
 	public List<AreaChart> getAreaChart(String project) throws IOException, ParseException {
 		List<AreaChart> result = new ArrayList<>();
 		List<AreaChart> origin = originPageHistory(project);
@@ -78,12 +89,63 @@ public class FitnesseRepository {
 		List<AreaChart> resultOfFourWeek = removeOutOfFourWeek(datePreviousFourWeekFrom(result.get(data.size()-1).getDate()), result);
 		
 		return resultOfFourWeek;
+=======
+	public List<AreaChart> getAreaChart(String project) throws IOException {
+		String path = urlFitnesse + "/FrontPage." + project;
+		List<AreaChart> areas = new ArrayList<>();
+		String pageHistory = path + "." + "?pageHistory";
+		Document doc = Jsoup.connect(pageHistory).get();
+//		Elements trs = doc.select("table");
+		Elements trs = doc.select("table tr[id]");
+		for (Element tr : trs) {
+			String id = tr.attr("id");
+			String date = id.substring(id.indexOf("_")+1, id.length());
+			int passed = 0, failed = 0;
+			Elements tds = tr.select("td");
+			passed = Integer.parseInt(tds.select("[class^=pass_count").text());
+			failed = Integer.parseInt(tds.select("[class^=fail_count").text());
+			AreaChart area = new AreaChart();
+			area.setDate(buildDateWithMilisecond(date));
+			area.setFailed(failed);
+			area.setPassed(passed);
+			areas.add(area);
+		}
+		
+		
+		
+//		List<String> testSuites = getTestSuites(path);
+//		for (String testSuite : testSuites) {
+//			String pageHistory = path + "." + "?pageHistory";
+//			Document doc;
+////			try {
+//				doc = Jsoup.connect(pageHistory).get();
+//				Elements trs = doc.select("table tr[id]");
+//				for (Element tr : trs) {
+//					String id = tr.attr("id");
+//					String date = id.substring(id.indexOf("_")+1, id.length()-6);
+//					int passed = 0, failed = 0;
+//					Elements tds = tr.select("td");
+//					passed = Integer.parseInt(tds.select("[class^=pass_count").text());
+//					failed = Integer.parseInt(tds.select("[class^=fail_count").text());
+//					AreaChart area = new AreaChart();
+//					area.setDate(buildDate(date));
+//					area.setFailed(failed);
+//					area.setPassed(passed);
+//					areas.add(area);
+//				}
+				
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+		return uniqueAreaChartWithDate(areas);
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 	}
 	/**
 	 * Create list with unique value date
 	 * @param list
 	 * @return
 	 */
+<<<<<<< HEAD
 	public List<AreaChart> uniqueOriginWithLatesDate(List<AreaChart> origin) {
 		List<AreaChart> result = new ArrayList<>();
 		ComparatorWithDate comparator = new ComparatorWithDate();
@@ -108,6 +170,36 @@ public class FitnesseRepository {
 				origin.remove(origin.size()-1);
 			}
 		}
+=======
+	public List<AreaChart> uniqueAreaChartWithDate(List<AreaChart> list) {
+		ComparatorWithDate comparator = new ComparatorWithDate();
+		Map<Date, AreaChart> map = new HashMap<>();
+		List<AreaChart> result = new ArrayList<>();
+		Collections.sort(list, comparator);
+		int i = 1;
+		while (list.size() > 0) {
+			AreaChart dateMax = list.get(list.size());
+			result.add(dateMax);
+//			if (dateMax.getDate().getYear() == list.get(list.size() - i))
+		}
+		for (AreaChart areaChart : list) {
+			
+//			AreaChart sum = map.get(dateMax);
+//			if (sum == null) {
+//				sum = new AreaChart();
+//				sum.setDate(dateMax);
+//				sum.setFailed(0);
+//				sum.setPassed(0);
+//				map.put(dateMax, sum);
+//			}
+//			sum.setFailed(areaChart.getFailed());
+//			sum.setPassed(areaChart.getPassed());
+		}
+		List<AreaChart> result = new ArrayList<AreaChart>(map.values());
+		
+		Collections.sort(result, comparator);
+		Date maxDate = buildDateInFourWeek(result.get(result.size()-1).getDate());
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 		
 		return result;
 	}
@@ -216,7 +308,11 @@ public class FitnesseRepository {
 		return date;
 	}
 	
+<<<<<<< HEAD
 	public static Date buildDateWithMilis(String days){
+=======
+	public static Date buildDateWithMilisecond(String days){
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 		Date date = null;
 		try {
 			date = new SimpleDateFormat("yyyyMMddHHmmss").parse(days);
@@ -225,6 +321,7 @@ public class FitnesseRepository {
 		}
 		return date;
 	}
+<<<<<<< HEAD
 	
 	private Date truncarFecha(Date fechaParametro) throws ParseException {
 	    String fecha="";
@@ -232,5 +329,7 @@ public class FitnesseRepository {
 	    fecha =outputFormatter.format(fechaParametro);
 	    return outputFormatter.parse(fecha);
 	}
+=======
+>>>>>>> f22d23edcea448c62b092b8eb7b07e8e8bc1476c
 
 }
