@@ -2,12 +2,12 @@ package com.dxc.assignment.repository;
 
 import java.util.Comparator;
 
-import com.dxc.assignment.model.AreaChart;
+import com.dxc.assignment.model.TestExecution;
 
-public class ComparatorWithDate implements Comparator<AreaChart> {
+public class ComparatorWithDate implements Comparator<TestExecution> {
 
 	@Override
-	public int compare(AreaChart o1, AreaChart o2) {
+	public int compare(TestExecution o1, TestExecution o2) {
 		int com = 0;
 //		int year1 = Integer.parseInt(o1.getDate().substring(0, 4));
 //		int month1 = Integer.parseInt(o1.getDate().substring(4, 6));

@@ -15,3 +15,8 @@ jwt:
   
 app:
   name: assignment
+  
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.bfwg: DEBUG

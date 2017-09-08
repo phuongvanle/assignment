@@ -6,22 +6,22 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Projects")
-public class Project {
+@Document(collection = "SuitProjects")
+public class SuitProject {
 	@Id
 	private String id;
 	private String name;
-	private List<AreaChart> areaCharts;
+	private List<TestExecution> testExecutions;
 	
 	
-	public Project() {
-		areaCharts = new ArrayList<>();
+	public SuitProject() {
+		testExecutions = new ArrayList<>();
 	}
 
 
-	public Project(String name, List<AreaChart> areaCharts) {
+	public SuitProject(String name, List<TestExecution> testExecutions) {
 		this.name = name;
-		this.areaCharts = areaCharts;
+		this.testExecutions = testExecutions;
 	}
 
 
@@ -44,13 +44,13 @@ public class Project {
 		this.name = name;
 	}
 
-	public List<AreaChart> getAreaCharts() {
-		return areaCharts;
+	public List<TestExecution> getAreaCharts() {
+		return testExecutions;
 	}
 
 
-	public void setAreaCharts(List<AreaChart> areaCharts) {
-		this.areaCharts = areaCharts;
+	public void setAreaCharts(List<TestExecution> testExecution) {
+		this.testExecutions = testExecution;
 	}
 	
 	

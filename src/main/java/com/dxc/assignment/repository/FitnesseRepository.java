@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
-import com.dxc.assignment.model.AreaChart;
+import com.dxc.assignment.model.TestExecution;
 
 @Repository
 @PropertySource("classpath:setting.properties")
@@ -53,8 +53,8 @@ public class FitnesseRepository {
 		return projects;
 	}
 
-	public AreaChart getPieChart(String project) throws IOException, ParseException {
-		List<AreaChart> areas = getAreaChart(project);
+	public TestExecution getPieChart(String project) throws IOException, ParseException {
+		List<TestExecution> areas = getAreaChart(project);
 		return areas.get(areas.size()-1);
 	}
 	/**
@@ -64,13 +64,13 @@ public class FitnesseRepository {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	public List<AreaChart> getAreaChart(String project) throws IOException, ParseException {
-		List<AreaChart> result = new ArrayList<>();
-		List<AreaChart> origin = originPageHistory(project);
-		List<AreaChart> data = uniqueOriginWithLatesDate(origin);
+	public List<TestExecution> getAreaChart(String project) throws IOException, ParseException {
+		List<TestExecution> result = new ArrayList<>();
+		List<TestExecution> origin = originPageHistory(project);
+		List<TestExecution> data = uniqueOriginWithLatesDate(origin);
 		ComparatorWithDate comparator = new ComparatorWithDate();
 		Collections.sort(data, comparator);
-		for (AreaChart areaChart : data) {
+		for (TestExecution areaChart : data) {
 			areaChart.setDate(truncarFecha(areaChart.getDate()));
 			result.add(areaChart);
 		}
@@ -79,7 +79,7 @@ public class FitnesseRepository {
 			return result;
 		}
 		Date beginDate = datePreviousFourWeekFrom(result.get(result.size()-1).getDate());
-		List<AreaChart> resultOfFourWeek = removeOutOfFourWeek(beginDate, result);
+		List<TestExecution> resultOfFourWeek = removeOutOfFourWeek(beginDate, result);
 		
 		return resultOfFourWeek;
 	}
@@ -88,14 +88,14 @@ public class FitnesseRepository {
 	 * @param list
 	 * @return
 	 */
-	public List<AreaChart> uniqueOriginWithLatesDate(List<AreaChart> origin) {
-		List<AreaChart> result = new ArrayList<>();
+	public List<TestExecution> uniqueOriginWithLatesDate(List<TestExecution> origin) {
+		List<TestExecution> result = new ArrayList<>();
 		ComparatorWithDate comparator = new ComparatorWithDate();
 		Collections.sort(origin, comparator);
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
 		while (origin.size() > 1) {
-			AreaChart areaFirst = origin.get(origin.size()-1);
-			AreaChart areaSecond = origin.get(origin.size()-2);
+			TestExecution areaFirst = origin.get(origin.size()-1);
+			TestExecution areaSecond = origin.get(origin.size()-2);
 			Date lateDate = areaFirst.getDate();
 			Date nextDate = areaSecond.getDate();
 			if (fmt.format(lateDate).equals(fmt.format(nextDate))) {
@@ -117,8 +117,8 @@ public class FitnesseRepository {
 	}
 	
 	
-	public List<AreaChart> originPageHistory(String project) throws IOException {
-		List<AreaChart> areas = new ArrayList<>();
+	public List<TestExecution> originPageHistory(String project) throws IOException {
+		List<TestExecution> areas = new ArrayList<>();
 		int numOfSuitSetUp = numberOfSuiteSetUp(project);
 		String path = urlFitnesse + "/FrontPage." + project + "?pageHistory";
 		Document doc = Jsoup.connect(path).get();
@@ -130,7 +130,7 @@ public class FitnesseRepository {
 			Elements tds = tr.select("td");
 			int passed = Integer.parseInt(tds.select("[class^=pass_count").text()) - numOfSuitSetUp;
 			int failed = Integer.parseInt(tds.select("[class^=fail_count").text());
-			AreaChart area = new AreaChart();
+			TestExecution area = new TestExecution();
 			area.setDate(buildDateWithMilis(date));
 			area.setFailed(failed);
 			area.setPassed(passed);
@@ -164,10 +164,10 @@ public class FitnesseRepository {
 		return res;
 	}
 
-	public List<AreaChart> removeOutOfFourWeek(Date date, List<AreaChart> list) {
+	public List<TestExecution> removeOutOfFourWeek(Date date, List<TestExecution> list) {
 		int index = 0;
 		ComparatorWithDate comparator = new ComparatorWithDate();
-		AreaChart area = new AreaChart();
+		TestExecution area = new TestExecution();
 		area.setDate(date);
 		if (list.contains(area)) {
 			 index = list.indexOf(area);

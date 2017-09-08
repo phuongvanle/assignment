@@ -6,8 +6,9 @@ import com.dxc.assignment.model.User;
 
 public interface UserService {
 	
-	public User findById(String id);
-	public User findByUsername(String username);
-	public List<User> findAll();
+	void resetCredentials();
+    User findById(Long id);
+    User findByUsername(String username);
+    List<User> findAll ();
 
 }

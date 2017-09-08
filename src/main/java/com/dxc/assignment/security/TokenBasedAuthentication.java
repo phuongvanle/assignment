@@ -4,44 +4,41 @@ package com.dxc.assignment.security;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
+/**
+ * Created by fan.jin on 2016-11-11.
+ */
 public class TokenBasedAuthentication extends AbstractAuthenticationToken {
-	
-	private String token;
-	
-	private final UserDetails principle;
-	
 
-	public TokenBasedAuthentication(UserDetails principle) {
-		super(principle.getAuthorities());
-		this.principle = principle;
-	}
+    private String token;
+    private final UserDetails principle;
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-	
-	
-	public String getToken() {
-		return token;
-	}
+    public TokenBasedAuthentication( UserDetails principle ) {
+        super( principle.getAuthorities() );
+        this.principle = principle;
+    }
 
-	public UserDetails getPrinciple() {
-		return principle;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	@Override
-	public Object getCredentials() {
-		return token;
-	}
+    public void setToken( String token ) {
+        this.token = token;
+    }
 
-	@Override
-	public Object getPrincipal() {
-		return principle;
-	}
-	
-	@Override
-	public boolean isAuthenticated() {
-		return true;
-	}
+    @Override
+    public boolean isAuthenticated() {
+        return true;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return token;
+    }
+
+    @Override
+    public UserDetails getPrincipal() {
+        return principle;
+    }
 
 }

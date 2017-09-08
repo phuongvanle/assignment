@@ -10,16 +10,7 @@
 	<label>Password:</label>
 	<input ng-disabled="main.disabled || facebook.disabled" type="password" name="password" class="form-control" placeholder="please enter password" ng-model="main.loginData.password">
 	<br>
-	<button ng-disabled="main.disabled || facebook.disabled" class="btn btn-primary" type="submit">Login</button>&nbsp
-	<button ng-disabled="main.disabled || facebook.disabled" type="button" class="btn btn-success" ng-click="main.facebook()">Facebook</button>
-
-
-	<div class="reset">
-		<a href="/resetpassword"><button ng-disabled="main.disabled || facebook.disabled" type="button" class="btn btn-danger">Forgot Password</button></a>
-		<a href="/resetusername"><button ng-disabled="main.disabled || facebook.disabled" type="button" class="btn btn-primary">Forgot Username</button></a>
-	</div>
-
-
+	<button ng-disabled="main.disabled || facebook.disabled" class="btn btn-primary" type="submit">Login</button>&nbsp;
 </form>
 
 

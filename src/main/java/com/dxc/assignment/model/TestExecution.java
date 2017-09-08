@@ -4,9 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-@Document(collection="Areachart")
-public class AreaChart {
-	@Id
+public class TestExecution {
 	private String id;
 	private Date date;
 	private int passed;
@@ -44,7 +42,7 @@ public class AreaChart {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AreaChart other = (AreaChart) obj;
+		TestExecution other = (TestExecution) obj;
 		if (date == null) {
 			if (other.date != null)
 				return false;

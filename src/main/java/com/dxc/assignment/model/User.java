@@ -1,5 +1,6 @@
 package com.dxc.assignment.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Document(collection = "Users")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
 	
 	@Id
 	private String id;

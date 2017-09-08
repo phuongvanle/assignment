@@ -1,103 +1,129 @@
 package com.dxc.assignment.security;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.function.Function;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Map;
+import java.util.function.Function;
+
+
+/**
+ * Created by fan.jin on 2016-10-19.
+ */
 
 @Component
 public class TokenHelper {
-	@Value("${app.name}")
-	private String appname;
-	@Value("${jwt.secret}")
-	private String secret;
-	@Value("${jwt.expires_in}")
-	private long expires_In;
-	@Value("${jwt.header}")
-	private String auth_Header;
-	@Value("${jwt.cookie}")
-	private String auth_Cookie;
-	@Autowired
-	UserDetailsService userDetailsService;
 
-	private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
+    @Value("${app.name}")
+    private String APP_NAME;
 
-	public String getUsernameFromToken(String token) {
-		return getClaimsFromToken(token, Claims::getSubject);
-	}
-	
-	public Boolean canTokenBeRefreshed(String token) {
-		final Date expirationDate = getClaimsFromToken(token, Claims::getExpiration);
-		return expirationDate.compareTo(generateCurrentDate()) > 0;
-	}
-	
-	public String refreshToken(String token) {
-		final Claims claims = getAllClaimsFromToken(token);
-		claims.setIssuedAt(generateCurrentDate());
-		return generateToken(claims);
-	}
+    @Value("${jwt.secret}")
+    private String SECRET;
 
-	private Date generateCurrentDate() {
-		return new Date(getCurrentTimeMillis());
-	}
+    @Value("${jwt.expires_in}")
+    private long EXPIRES_IN;
 
-	private <T> T getClaimsFromToken(String token, Function<Claims, T> claimsResolver) {
-		Claims claims = getAllClaimsFromToken(token);
-		return claimsResolver.apply(claims);
-	}
+    @Value("${jwt.header}")
+    private String AUTH_HEADER;
 
-	private Claims getAllClaimsFromToken(String token) {
-		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-	}
+    @Value("${jwt.cookie}")
+    private String AUTH_COOKIE;
 
-	public String generateToken(Map<String, Object> claims) {
-		return Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate())
-				.signWith(signatureAlgorithm, secret).compact();
-	}
-	
-	public String generateToken(String username) {
-		return Jwts.builder().setIssuer(appname).setSubject(username).setIssuedAt(generateCurrentDate())
-				.setExpiration(generateExpirationDate()).signWith(signatureAlgorithm, secret).compact();
-	}
+    @Autowired
+    UserDetailsService userDetailsService;
 
-	private Date generateExpirationDate() {
-		return new Date(getCurrentTimeMillis() + this.expires_In * 1000);
-	}
+    private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
-	private long getCurrentTimeMillis() {
-		return DateTime.now().getMillis();
-	}
-	
-	public String getToken(HttpServletRequest request) {
-		// Getting the token from Cookie Store
-		Cookie authCookie = getCookieValueByName(request, auth_Cookie);
-		if (authCookie != null) {
-			return authCookie.getValue();
-		}
-		
-		/**
-		 * Getting the token from Authentication header e.g Bearer your_token
-		 */
-		String authHeader = request.getHeader(auth_Header);
-		if (authHeader != null && authHeader.startsWith("Bearer ")) {
-			return authHeader.substring(7);
-		}
-		return null;
-	}
-	
-	/**
+    public String getUsernameFromToken(String token) {
+        return getClaimsFromToken(token, Claims::getSubject);
+    }
+
+    public Boolean canTokenBeRefreshed(String token) {
+        final Date expirationDate = getClaimsFromToken(token, Claims::getExpiration);
+        return expirationDate.compareTo(generateCurrentDate()) > 0;
+    }
+
+    public String refreshToken(String token) {
+        final Claims claims = getAllClaimsFromToken(token);
+        claims.setIssuedAt(generateCurrentDate());
+        return generateToken(claims);
+    }
+
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setIssuer( APP_NAME )
+                .setSubject(username)
+                .setIssuedAt(generateCurrentDate())
+                .setExpiration(generateExpirationDate())
+                .signWith( SIGNATURE_ALGORITHM, SECRET )
+                .compact();
+    }
+
+
+    private <T> T getClaimsFromToken(String token, Function<Claims, T> claimsResolver) {
+        Claims claims = getAllClaimsFromToken(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    String generateToken(Map<String, Object> claims) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(generateExpirationDate())
+                .signWith( SIGNATURE_ALGORITHM, SECRET )
+                .compact();
+    }
+
+    private long getCurrentTimeMillis() {
+        return DateTime.now().getMillis();
+    }
+
+    private Date generateCurrentDate() {
+        return new Date(getCurrentTimeMillis());
+    }
+
+    private Date generateExpirationDate() {
+
+        return new Date(getCurrentTimeMillis() + this.EXPIRES_IN * 1000);
+    }
+
+    public String getToken( HttpServletRequest request ) {
+        /**
+         *  Getting the token from Cookie store
+         */
+        Cookie authCookie = getCookieValueByName( request, AUTH_COOKIE );
+        if ( authCookie != null ) {
+            return authCookie.getValue();
+        }
+        /**
+         *  Getting the token from Authentication header
+         *  e.g Bearer your_token
+         */
+        String authHeader = request.getHeader(AUTH_HEADER);
+        if ( authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+
+        return null;
+    }
+
+    /**
      * Find a specific HTTP cookie in a request.
      *
      * @param request
@@ -106,17 +132,15 @@ public class TokenHelper {
      *            The cookie name to look for.
      * @return The cookie, or <code>null</code> if not found.
      */
-
-	private Cookie getCookieValueByName(HttpServletRequest request, String name) {
-		if (request.getCookies() == null) {
-			return null;
-		}
-		for (int i = 0; i < request.getCookies().length; i++) {
-			if (request.getCookies()[i].getName().equals(name)) {
-				return request.getCookies()[i];
-			}
-		}
-		return null;
-	}
-
+    public Cookie getCookieValueByName(HttpServletRequest request, String name) {
+        if (request.getCookies() == null) {
+            return null;
+        }
+        for (int i = 0; i < request.getCookies().length; i++) {
+            if (request.getCookies()[i].getName().equals(name)) {
+                return request.getCookies()[i];
+            }
+        }
+        return null;
+    }
 }

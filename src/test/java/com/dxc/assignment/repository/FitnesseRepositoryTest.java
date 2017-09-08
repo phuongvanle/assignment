@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.dxc.assignment.model.AreaChart;
+import com.dxc.assignment.model.TestExecution;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,7 +24,7 @@ public class FitnesseRepositoryTest {
 	
 	@Autowired
 	FitnesseRepository fitnesseRepository;
-	List<AreaChart> areas, result;
+	List<TestExecution> areas, result;
 	int a, b;
 	@Before
 	public void setUp() {
